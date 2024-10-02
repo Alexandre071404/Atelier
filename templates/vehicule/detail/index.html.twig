@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du véhicule{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Détails du véhicule</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tr>
+                        <th scope="row">Nom :</th>
+                        <td>{{ vehicule.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Plaque :</th>
+                        <td>{{ vehicule.plaque }}</td>
+                    </tr>
+                </table>
+
+                {% if pieces_url %}
+                    <div class="alert alert-info text-center">
+                        Pour acheter des pièces détachées compatibles avec ce véhicule, 
+                        <a href="{{ pieces_url }}" target="_blank" class="alert-link">cliquez ici</a>.
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center">
+                        Impossible de récupérer le lien pour les pièces détachées pour ce véhicule.
+                    </div>
+                {% endif %}
+
+                <div class="text-center mt-4">
+                    <a href="{{ path('vehicule_list') }}" class="btn btn-secondary">Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

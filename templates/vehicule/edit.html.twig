@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le véhicule{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Modifier le véhicule</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Formulaire de modification du véhicule -->
+                {{ form_start(form) }}
+                
+                <!-- Champs du formulaire avec les classes Bootstrap -->
+                <div class="form-group">
+                    {{ form_label(form.nom, 'Nom du véhicule') }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.etat, 'État du véhicule') }}
+                    {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.plaque, 'Plaque d\'immatriculation') }}
+                    {{ form_widget(form.plaque, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <!-- Bouton Modifier -->
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Modifier</button>
+                </div>
+                
+                {{ form_end(form) }}
+
+                <!-- Lien de retour -->
+                <div class="text-center mt-3">
+                    <a href="{{ path('vehicule_list') }}" class="btn btn-secondary">Retourner à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

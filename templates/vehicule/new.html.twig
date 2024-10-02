@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un véhicule{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Ajouter un véhicule</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom du véhicule'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.plaque, {'attr': {'class': 'form-control', 'placeholder': 'Plaque d\'immatriculation'}}) }}
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success btn-block">Ajouter</button>
+                </div>
+                {{ form_end(form) }}
+
+                <div class="text-center mt-3">
+                    <a href="{{ path('vehicule_list') }}" class="btn btn-secondary">Retourner à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

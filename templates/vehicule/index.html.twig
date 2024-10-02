@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des véhicules{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Liste des véhicules</h1>
+
+        <!-- Bouton Ajouter un nouveau véhicule -->
+        <div class="text-right mb-3">
+            <a href="{{ path('vehicule_new') }}" class="btn btn-success">Ajouter un nouveau véhicule</a>
+        </div>
+
+        <!-- Tableau des véhicules -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nom</th>
+                        <th>État</th>
+                        <th>Plaque</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehicule in vehicules %}
+                        <tr>
+                            <td>{{ vehicule.nom }}</td>
+                            <td>
+                                <select class="form-control chang" data-id="{{ vehicule.id }}">
+                                    <option value="neuf" {% if vehicule.etat.value == 'neuf' %}selected{% endif %}>Neuf</option>
+                                    <option value="endommagé" {% if vehicule.etat.value == 'endommagé' %}selected{% endif %}>Endommagé</option>
+                                    <option value="cassé" {% if vehicule.etat.value == 'cassé' %}selected{% endif %}>Cassé</option>
+                                </select>
+                            </td>
+                            <td>{{ vehicule.plaque }}</td>
+                            <td>
+                                <!-- Lien Modifier -->
+                                <a href="{{ path('vehicule_edit', {'id': vehicule.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                <!-- Lien Détails -->
+                                <a href="{{ path('vehicule_detail', {'id': vehicule.id}) }}" class="btn btn-info btn-sm">Détails</a>
+                                
+                                <!-- Formulaire de suppression -->
+                                <form class="d-inline-block supp" method="post" action="{{ path('vehicule_delete', {'id': vehicule.id}) }}" onsubmit="return confirm('Souhaitez-vous supprimer ce véhicule?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vehicule.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.chang').change(function() {
+            var vehiculeId = $(this).data('id'); // Récupération de l'ID du véhicule
+            var newEtat = $(this).val(); // Récupération de la nouvelle valeur de l'état
+            var csrfToken = "{{ csrf_token('update_etat') }}"; 
+
+            // Envoi de la requête AJAX
+            $.ajax({
+                url: "{{ path('vehicule_update_etat_ajax') }}", // URL de la route
+                type: 'POST',
+                contentType: 'application/json', 
+                // On converti les données en JSON
+                data: JSON.stringify({ 
+                    id: vehiculeId,
+                    etat: newEtat,
+                    _token: csrfToken 
+                }),
+               /* Confirmation du bon changement dans la base de données à décommenter si l'on veut avoir un feedback
+               success: function(response) {
+                    alert('État du véhicule mis à jour avec succès.');
+                },*/
+                error: function(xhr, status, error) {
+                    var errorMessage = 'Une erreur s\'est produite lors de la mise à jour.';
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage += ' ' + xhr.responseJSON.error;
+                    }
+                    alert(errorMessage);
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}
