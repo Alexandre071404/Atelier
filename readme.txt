@@ -22,4 +22,6 @@ DATABASE_URL="mysql://root:rootroot@127.0.0.1:3306/Atelier?serverVersion=8.0.32&
 
 à changer dans le .env.local
 
+Puis construire la base de donnée avec le .env.local
+
 
