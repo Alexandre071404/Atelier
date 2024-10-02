@@ -11,3 +11,15 @@ Possibilité de remettre l'ancien CSS en décommentant dans les fichiers base.ht
 
 documentation utilisée pour Boostrap :
 https://getbootstrap.com/docs/4.6/getting-started/introduction/
+
+Pour récupérer le projet 
+
+composer install 
+
+puis changer 
+
+DATABASE_URL="mysql://root:rootroot@127.0.0.1:3306/Atelier?serverVersion=8.0.32&charset=utf8mb4"
+
+à changer dans le .env.local
+
+
